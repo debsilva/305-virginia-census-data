@@ -12,9 +12,9 @@ with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-c
 
 ########### Define a few variables ######
 
-tabtitle = 'Virginia Counties'
+tabtitle = 'Massachusetts Counties'
 sourceurl = 'https://www.kaggle.com/muonneutrino/us-census-demographic-data'
-githublink = 'https://github.com/austinlasseter/dash-virginia-counties'
+githublink = 'https://github.com/debsilva/305-virginia-census-data'
 varlist=['TotalPop', 'Men', 'Women', 'Hispanic',
        'White', 'Black', 'Native', 'Asian', 'Pacific', 'VotingAgeCitizen',
        'Income', 'IncomeErr', 'IncomePerCap', 'IncomePerCapErr', 'Poverty',
@@ -23,7 +23,8 @@ varlist=['TotalPop', 'Men', 'Women', 'Hispanic',
        'WorkAtHome', 'MeanCommute', 'Employed', 'PrivateWork', 'PublicWork',
        'SelfEmployed', 'FamilyWork', 'Unemployment', 'RUCC_2013']
 
-df=pd.read_pickle('resources/va-stats.pkl')
+df=pd.read_csv('resources/acs2017_county_data.csv')
+df=df[df['State'].isin(['Massachusetts'])]
 
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -34,7 +35,7 @@ app.title=tabtitle
 ########### Layout
 
 app.layout = html.Div(children=[
-    html.H1('Virginia Census Data 2017'),
+    html.H1('Massachusetts Census Data 2017'),
     # Dropdowns
     html.Div(children=[
         # left side
@@ -48,7 +49,7 @@ app.layout = html.Div(children=[
         ], className='three columns'),
         # right side
         html.Div([
-            dcc.Graph(id='va-map')
+            dcc.Graph(id='ma-map')
         ], className='nine columns'),
     ], className='twelve columns'),
 
@@ -61,7 +62,7 @@ app.layout = html.Div(children=[
 )
 
 ############ Callbacks
-@app.callback(Output('va-map', 'figure'),
+@app.callback(Output('ma-map', 'figure'),
               [Input('stats-drop', 'value')])
 def display_results(selected_value):
     valmin=df[selected_value].min()
