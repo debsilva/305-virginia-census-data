@@ -25,6 +25,7 @@ varlist=['TotalPop', 'Men', 'Women', 'Hispanic',
 
 df=pd.read_csv('resources/acs2017_county_data.csv')
 df=df[df['State'].isin(['Massachusetts'])]
+df
 
 
 ########### Initiate the app
@@ -69,7 +70,7 @@ def display_results(selected_value):
     valmin=df[selected_value].min()
     valmax=df[selected_value].max()
     fig = go.Figure(go.Choroplethmapbox(geojson=counties,
-                                    locations=df['FIPS'],
+                                    locations=df['CountyId'],
                                     z=df[selected_value],
                                     colorscale='reds',
                                     text=df['County'],
