@@ -26,6 +26,7 @@ varlist=['TotalPop', 'Men', 'Women', 'Hispanic',
 df=pd.read_csv('resources/acs2017_county_data.csv')
 df=df[df['State'].isin(['Massachusetts'])]
 
+
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -35,7 +36,7 @@ app.title=tabtitle
 ########### Layout
 
 app.layout = html.Div(children=[
-    html.H1('Massachusetts Census Data 2017'),
+    html.H1('MA Census Data 2017'),
     # Dropdowns
     html.Div(children=[
         # left side
@@ -70,14 +71,14 @@ def display_results(selected_value):
     fig = go.Figure(go.Choroplethmapbox(geojson=counties,
                                     locations=df['FIPS'],
                                     z=df[selected_value],
-                                    colorscale='Blues',
+                                    colorscale='reds',
                                     text=df['County'],
                                     zmin=valmin,
                                     zmax=valmax,
                                     marker_line_width=0))
     fig.update_layout(mapbox_style="carto-positron",
                       mapbox_zoom=5.8,
-                      mapbox_center = {"lat": 38.0293, "lon": -79.4428})
+                      mapbox_center = {"lat": 42.4072, "lon": 71.3824})
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
 # https://community.plot.ly/t/what-colorscales-are-available-in-plotly-and-which-are-the-default/2079
